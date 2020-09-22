@@ -19,6 +19,7 @@
             height="300px">
     </canvas>
     <br/>
+
     X:      <input id="x"      value="20">
     Width:  <input id="width"  value="20"><br/>
 
@@ -135,16 +136,8 @@
 
 //  --- Render Shapes ---
   const render = () => {
-    gl.bindBuffer(gl.ARRAY_BUFFER,
-      bufferCoords);
-    gl.vertexAttribPointer(
-      attributeCoords,
-      2,
-      gl.FLOAT,
-      false,
-      0,
-
-      0);
+    gl.bindBuffer(gl.ARRAY_BUFFER,  bufferCoords);
+    gl.vertexAttribPointer(attributeCoords, 2, gl.FLOAT, false, 0, 0);
 
     shapes.forEach(shape => {
       gl.uniform4f(uniformColor,
