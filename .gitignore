@@ -6,3 +6,7 @@ node_modules
 
 # ignore build files
 build
+
+#ignore DS
+.DS_Store
+.vscode
