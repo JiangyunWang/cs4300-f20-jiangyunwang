@@ -20,15 +20,15 @@ const sizeOne = {width: 1, height: 1, depth: 1}
 // --- Data model ---
 // Configure the color of the initial rectangle in the shapes array
 let shapes = [
-    // {
-    //     type: RECTANGLE,
-    //     position: origin,
-    //     dimensions: sizeOne,
-    //     color: BLUE_RGB,
-    //     translation:  {x: -15, y: 0, z: -20},
-    //     scale:        {x: 10, y: 10, z: 10},
-    //     rotation:     {x: 0, y: 0, z: 0}
-    // },
+    {
+        type: RECTANGLE,
+        position: origin,
+        dimensions: sizeOne,
+        color: BLUE_RGB,
+        translation:  {x: -15, y: 0, z: -20},
+        scale:        {x: 10, y: 10, z: 10},
+        rotation:     {x: 0, y: 0, z: 0}
+    },
     // Add support for triangles
     // Declaration: a TRIANGLE constant to represent the new shape and add it to shapes Array.
     {
@@ -36,9 +36,9 @@ let shapes = [
         position: origin,
         dimensions: sizeOne,
         color: RED_RGB,
-        translation:  {x: -10, y: -10, z: -20},
+        translation:  {x: 15, y: 0, z: -20},
         scale:        {x: 10, y: 10, z: 10},
-        rotation:     {x: 0, y: 0, z: 0}
+        rotation:     {x: 0, y: 0, z: 180}
     },
     //
     // {
@@ -105,7 +105,6 @@ const addShape = (newShape, type) => {
     shapes.push(shape)
 
     render()
-    console.log("*****Render: length of shapes" + shapes.length)
 }
 
 
@@ -358,7 +357,9 @@ const renderTriangle = (triangle) => {
     const x3 = triangle.position.x
     const y3 = triangle.position.y - triangle.dimensions.height / 2
 
-    const float32Array = new Float32Array([x1, y1, 0, x2, y2, 0, x3, y3, 0])
+    const float32Array = new Float32Array([
+        x1, y1, 0, x3, y3, 0, x2, y2, 0
+    ])
 
     gl.bufferData(gl.ARRAY_BUFFER, float32Array, gl.STATIC_DRAW);
 
@@ -405,7 +406,7 @@ const renderStar = (star) => {
     const y0 = star.position.y
 
     const float32Array = new Float32Array([
-        x1, y1, 0, x2, y2, 0, x3, y3, 0,
+        x1, y1, 0, x3, y3, 0, x2, y2, 0,
         x1, y0, 0, x2, y0, 0, x3, y4, 0
     ])
 
@@ -434,3 +435,5 @@ const renderCube = (cube) => {
     var primitiveType = gl.TRIANGLES;
     gl.drawArrays(gl.TRIANGLES, 0, 6 * 6);
 }
+
+
