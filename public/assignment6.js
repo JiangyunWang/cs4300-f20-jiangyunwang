@@ -1,76 +1,121 @@
 // Examples of func webglUtils.hexToRgb
 const RED_HEX = "#FF0000"
 const RED_RGB = webglUtils.hexToRgb(RED_HEX)
-const GREEN_HEX = "#00FF00"
-const GREEN_RGB = webglUtils.hexToRgb(GREEN_HEX)
 const BLUE_HEX = "#0000FF"
 const BLUE_RGB = webglUtils.hexToRgb(BLUE_HEX)
-
-
+const GREEN_HEX = "#00FF00"
+const GREEN_RGB = webglUtils.hexToRgb(GREEN_HEX)
 const RECTANGLE = "RECTANGLE"
 const TRIANGLE = "TRIANGLE"
-const CIRCLE = "CIRCLE"
+const LETTER_F = "LETTER_F"
 const STAR = "STAR"
+const CIRCLE = "CIRCLE"
 const CUBE = "CUBE"
-
-// add translation,rotation,and scale properties
 const origin = {x: 0, y: 0, z: 0}
 const sizeOne = {width: 1, height: 1, depth: 1}
 
+
 // --- Data model ---
 // Configure the color of the initial rectangle in the shapes array
+let camera = {
+    translation: {x: -45, y: -35, z: 21},
+    rotation: {x: 40, y: 235, z: 0}
+}
+
+let lightSource = [0.4, 0.3, 0.5]
+
 let shapes = [
     {
-        type: RECTANGLE,
+        type: CUBE,
         position: origin,
         dimensions: sizeOne,
         color: BLUE_RGB,
-        translation:  {x: -15, y: 0, z: -20},
-        scale:        {x: 10, y: 10, z: 10},
-        rotation:     {x: 0, y: 0, z: 0}
+        translation: {x:  0, y: 0, z: 0},
+        scale:       {x:   0.5, y:   0.5, z:   0.5},
+        rotation:    {x:   0, y:  0, z:   0},
     },
-    // Add support for triangles
-    // Declaration: a TRIANGLE constant to represent the new shape and add it to shapes Array.
-    {
-        type: TRIANGLE,
-        position: origin,
-        dimensions: sizeOne,
-        color: RED_RGB,
-        translation:  {x: 15, y: 0, z: -20},
-        scale:        {x: 10, y: 10, z: 10},
-        rotation:     {x: 0, y: 0, z: 180}
-    },
-    //
-    // {
-    //     type: CIRCLE,
-    //     position: origin,
-    //     dimensions: sizeOne,
-    //     color: RED_RGB,
-    //     translation:  {x: -15, y: 15, z: -20},
-    //     scale:        {x: 5, y: 5, z: 5},
-    //     rotation:     {x: 0, y: 0, z: 0}
-    // },
-    //
-    // {
-    //     type: STAR,
-    //     position: origin,
-    //     dimensions: sizeOne,
-    //     color: GREEN_RGB,
-    //     translation:  {x: 15, y: 15, z: -20},
-    //     scale:        {x: 5, y: 5, z: 5},
-    //     rotation:     {x: 0, y: 0, z: 0}
-    // },
-
     {
         type: CUBE,
         position: origin,
         dimensions: sizeOne,
         color: GREEN_RGB,
-        translation:  {x: -15, y: -15, z: -75},
-        scale:        {x:   1, y:   1, z:   1},
-        rotation:     {x:   0, y:  45, z:   0}
-    }
+        translation: {x: 20, y: 0, z: 0},
+        scale:       {x:   0.5, y:   0.5, z:   0.5},
+        rotation:    {x:   0, y:  0, z:   0},
+    },
+    {
+        type: CUBE,
+        position: origin,
+        dimensions: sizeOne,
+        color: RED_RGB,
+        translation:  {x: -20, y: 0, z: 0},
+        scale:       {x:   0.5, y:   0.5, z:   0.5},
+        rotation:     {x: 0, y: 0, z: 0}
+    },
+    // {
+    //   type: LETTER_F,
+    //   position: origin,
+    //   dimensions: sizeOne,
+    //   color: BLUE_RGB,
+    //   translation: {x: -150, y: 0, z: -360},
+    //   scale: {x: 1, y: 1, z: 1},
+    //   rotation: {x: m4.degToRad(190), y: m4.degToRad(40), z: m4.degToRad(320)},
+    // },
+    // {
+    //   type: LETTER_F,
+    //   position: origin,
+    //   dimensions: sizeOne,
+    //   color: RED_RGB,
+    //   translation: {x: -100, y: 0, z: -400},
+    //   scale: {x: 1, y: 1, z: 1},
+    //   rotation: {x: m4.degToRad(190), y: m4.degToRad(40), z: m4.degToRad(320)},
+    // },
+    // {
+    //   type: RECTANGLE,
+    //   position: origin,
+    //   dimensions: sizeOne,
+    //   color: BLUE_RGB,
+    //   translation: {x: -15, y: 0, z: -20},
+    //   scale: {x: 10, y: 10, z: 10},
+    //   rotation: {x: 0, y: 0, z: 0}
+    // },
+    // {
+    //   type: TRIANGLE,
+    //   position: origin,
+    //   dimensions: sizeOne,
+    //   color: RED_RGB,
+    //   translation: {x: 15, y: 0, z: -20},
+    //   scale: {x: 10, y: 10, z: 10},
+    //   rotation: {x: 0, y: 0, z: 180}
+    // },
+    // {
+    //   type: CUBE,
+    //   position: origin,
+    //   dimensions: sizeOne,
+    //   color: RED_RGB,
+    //   translation: {x:   -20, y: 0, z: 0},
+    //   scale:       {x:   0.5, y:   0.5, z:   0.5},
+    //   rotation:    {x:   0, y:  0, z:   0},
+    // },
 
+    // {
+    //   type: CUBE,
+    //   position: origin,
+    //   dimensions: sizeOne,
+    //   color: BLUE_RGB,
+    //   translation: {x: -50, y: 0, z: -100},
+    //   scale: {x: 1, y: 1, z: 1},
+    //   rotation: {x: 45, y: 45, z: 45},
+    // },
+    // {
+    //   type: CUBE,
+    //   position: origin,
+    //   dimensions: sizeOne,
+    //   color: GREEN_RGB,
+    //   translation: {x: 0, y: 0, z: -100},
+    //   scale: {x: 1, y: 1, z: 1},
+    //   rotation: {x: 45, y: 45, z: 45},
+    // }
 ]
 
 //  --- Initialize WebGL ---
@@ -157,7 +202,7 @@ const init = () => {
     document.getElementById("cry").value = camera.rotation.y
     document.getElementById("crz").value = camera.rotation.z
 
-    selectShape(0)
+    webglUtils.selectShape(0)
 }
 
 
@@ -177,12 +222,13 @@ const render = () => {
     const aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
     const zNear = 1;
     const zFar = 2000;
+    let cameraMatrix = m4.identity()            // initialize camera with identity
 
     gl.bindBuffer(gl.ARRAY_BUFFER, bufferCoords);
 
 
     if(lookAt) {
-        let cameraMatrix = m4.identity()            // initialize camera with identity
+
         cameraMatrix = m4.translate(                // translate camera to it's x, y, z
             cameraMatrix,
             camera.translation.x,
@@ -197,11 +243,31 @@ const render = () => {
             target,                                 // towards target = [x, y, z]
             up)                                     // where up=[0, 1, 0] (+y)
         cameraMatrix = m4.inverse(cameraMatrix)     // invert the cameraMatrix to apply to the world
-        const projectionMatrix = m4.perspective(    // create perspective projection matrix
-            fieldOfViewRadians, aspect, zNear, zFar)// multiply perspective matrix and camera matrix
-        const viewProjectionMatrix = m4.multiply(   // to get view projection matrix to apply to object world
-            projectionMatrix, cameraMatrix)
+        // const projectionMatrix = m4.perspective(    // create perspective projection matrix
+        //     fieldOfViewRadians, aspect, zNear, zFar)// multiply perspective matrix and camera matrix
+        // const viewProjectionMatrix = m4.multiply(   // to get view projection matrix to apply to object world
+        //     projectionMatrix, cameraMatrix)
+    } else {
+        cameraMatrix = m4.zRotate(
+            cameraMatrix,
+            m4.degToRad(camera.rotation.z));
+        cameraMatrix = m4.xRotate(
+            cameraMatrix,
+            m4.degToRad(camera.rotation.x));
+        cameraMatrix = m4.yRotate(
+            cameraMatrix,
+            m4.degToRad(camera.rotation.y));
+        cameraMatrix = m4.translate(
+            cameraMatrix,
+            camera.translation.x,
+            camera.translation.y,
+            camera.translation.z);
     }
+
+    const projectionMatrix = m4.perspective(
+        fieldOfViewRadians, aspect, zNear, zFar);
+    const viewProjectionMatrix = m4.multiply(
+        projectionMatrix, cameraMatrix);
 
 
     const $shapeList = $("#object-list")
@@ -216,7 +282,9 @@ const render = () => {
             1
         );
 
-        let M = computeModelViewMatrix(gl.canvas, shape, viewProjectionMatrix)          // apply view projection matrix to all the shapes
+
+
+        let M = computeModelViewMatrix(shape, viewProjectionMatrix)          // apply view projection matrix to all the shapes
 
         gl.uniformMatrix4fv(uniformMatrix, false, M)
 
