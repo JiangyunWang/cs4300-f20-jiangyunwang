@@ -48,7 +48,7 @@ const webglUtils = {
         return program
     },
     updateCameraAngle: (event) => {
-        cameraAngleRadians = m4.degToRad(event.target.value);
+        cameraAngleRadians = degToRad(event.target.value);
         render();
     },
     updateLookUp: (event) => {
@@ -56,7 +56,7 @@ const webglUtils = {
         render();
     },
     updateFieldOfView: (event) => {
-        fieldOfViewRadians = m4.degToRad(event.target.value);
+        fieldOfViewRadians = degToRad(event.target.value);
         render();
     },
     updateTranslation: (event, axis) => {
@@ -89,12 +89,10 @@ const webglUtils = {
         target[index] = event.target.value
         render();
     },
-
-    toggleLookAt: (event) => {
-        lookAt = event.target.checked
+    updateLightDirection: (event, index) => {
+        lightSource[index] = parseFloat(event.target.value)
         render()
     },
-
     addShape: (newShape, type) => {
         const colorHex = document.getElementById("color").value
         const colorRgb = webglUtils.hexToRgb(colorHex)
@@ -136,7 +134,7 @@ const webglUtils = {
         document.getElementById("rx").value = shapes[selectedIndex].rotation.x
         document.getElementById("ry").value = shapes[selectedIndex].rotation.y
         document.getElementById("rz").value = shapes[selectedIndex].rotation.z
-        document.getElementById("fv").value = m4.radToDeg(fieldOfViewRadians)
+        document.getElementById("fv").value = webglUtils.radToDeg(fieldOfViewRadians)
         const hexColor = webglUtils.rgbToHex(shapes[selectedIndex].color)
         document.getElementById("color").value = hexColor
     },
@@ -170,7 +168,18 @@ const webglUtils = {
         ]
         const float32Array = new Float32Array(geometry)
         gl.bufferData(gl.ARRAY_BUFFER, float32Array, gl.STATIC_DRAW)
-        var primitiveType = gl.TRIANGLES;
+        var normals = new Float32Array([
+            0,0, 1,  0,0, 1,  0,0, 1,    0,0, 1,  0,0, 1,  0,0, 1,
+            0,0,-1,  0,0,-1,  0,0,-1,    0,0,-1,  0,0,-1,  0,0,-1,
+            0,-1,0,  0,-1,0,  0,-1,0,    0,-1,0,  0,-1,0,  0,-1,0,
+            0, 1,0,  0, 1,0,  0, 1,0,    0, 1,0,  0, 1,0,  0, 1,0,
+            -1, 0,0, -1, 0,0, -1, 0,0,   -1, 0,0, -1, 0,0, -1, 0,0,
+            1, 0,0,  1, 0,0,  1, 0,0,    1, 0,0,  1, 0,0,  1 ,0,0,
+        ]);
+        gl.bindBuffer(gl.ARRAY_BUFFER, normalBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER, normals, gl.STATIC_DRAW);
+        // var primitiveType = gl.TRIANGLES;
+
         gl.drawArrays(gl.TRIANGLES, 0, 6 * 6);
     },
     renderRectangle: (rectangle) => {
@@ -210,55 +219,6 @@ const webglUtils = {
 
         gl.drawArrays(gl.TRIANGLES, 0, 3);
     },
-
-    renderStar: (star) => {
-        // first triangle
-        const x1 = star.position.x - star.dimensions.width * 0.6
-        const y1 = star.position.y + star.dimensions.height * 0.6
-        const x2 = star.position.x + star.dimensions.width * 0.6
-        const y2 = star.position.y + star.dimensions.height * 0.6
-        const x3 = star.position.x
-        const y3 = star.position.y - star.dimensions.height * 0.6
-        // second triangle
-        const y4 = star.position.y + star.dimensions.height
-        const y0 = star.position.y
-
-        const float32Array = new Float32Array([
-            x1, y1, 0, x3, y3, 0, x2, y2, 0,
-            x1, y0, 0, x2, y0, 0, x3, y4, 0
-        ])
-
-        gl.bufferData(gl.ARRAY_BUFFER, float32Array, gl.STATIC_DRAW);
-
-        gl.drawArrays(gl.TRIANGLES, 0, 6);
-    },
-
-    renderCircle: (circle) => {
-        // Insert center of circle
-        const xCenter = circle.position.x;
-        const yCenter = circle.position.y;
-        const points = [xCenter, yCenter, 0]
-
-
-        // Insert 100 triangles
-        // dimension.
-        for (i = 0; i <= 100; i++) {
-            // the side for each triangle
-            const theta = 2 * Math.PI * (i / 100)
-            const xPos = xCenter + Math.cos(theta) * circle.dimensions.width / 2
-            const yPos = yCenter + Math.sin(theta) * circle.dimensions.height / 2
-            points.push(xPos, yPos, 0)
-
-        }
-
-        // Using a triangle fan
-        const float32Array = new Float32Array(points)
-
-        gl.bufferData(gl.ARRAY_BUFFER, float32Array, gl.STATIC_DRAW)
-
-        gl.drawArrays(gl.TRIANGLE_FAN, 0, points.length/2);
-    },
-
     renderLetterF: (letterF) => {
         const geometry = [
             // left column front [ok]
@@ -330,4 +290,10 @@ const webglUtils = {
         var primitiveType = gl.TRIANGLES;
         gl.drawArrays(gl.TRIANGLES, 0, 16 * 6);
     },
+
+    radToDeg: (radians) => radians * 180 / Math.PI,
+
+    degToRad: (degrees) => degrees * Math.PI / 180,
+
+
 }
