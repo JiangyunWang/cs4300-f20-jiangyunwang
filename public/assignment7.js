@@ -192,9 +192,9 @@ const init = () => {
 
     document.getElementById("fv").onchange = event => webglUtils.updateFieldOfView(event)
 
-    document.getElementById("color").onchange = event => updateColor(event)
+    document.getElementById("color").onchange = event => webglUtils.updateColor(event)
 
-    document.getElementById("lookAt").onchange = event => webglUtils.toggleLookAt(event)
+    document.getElementById("lookAt").onchange = event => webglUtils.updateLookUp(event)
     document.getElementById("ctx").onchange = event => webglUtils.updateCameraTranslation(event, "x")
     document.getElementById("cty").onchange = event => webglUtils.updateCameraTranslation(event, "y")
     document.getElementById("ctz").onchange = event => webglUtils.updateCameraTranslation(event, "z")
@@ -353,7 +353,7 @@ const render = () => {
           id="${shape.type}-${index}"
           name="shape-index"
           ${index === selectedShapeIndex ? "checked": ""}
-          onclick="selectShape(${index})"
+          onclick="webglUtils.selectShape(${index})"
           value="${index}"/>
 
           ${shape.type};

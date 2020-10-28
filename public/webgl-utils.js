@@ -123,6 +123,7 @@ const webglUtils = {
             selectedShapeIndex = -1
         }
     },
+
     selectShape: (selectedIndex) => {
         selectedShapeIndex = selectedIndex
         document.getElementById("tx").value = shapes[selectedIndex].translation.x
@@ -138,6 +139,7 @@ const webglUtils = {
         const hexColor = webglUtils.rgbToHex(shapes[selectedIndex].color)
         document.getElementById("color").value = hexColor
     },
+
     doMouseDown: (event) => {
         const boundingRectangle = canvas.getBoundingClientRect();
         const x =  Math.round(event.clientX - boundingRectangle.left - boundingRectangle.width/2);
