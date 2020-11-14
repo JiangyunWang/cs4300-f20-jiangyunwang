@@ -21,6 +21,7 @@
    uniform mat4 uProjectionMatrix;
 
    varying lowp vec4 vColor;
+
    void main() {
      gl_Position = uProjectionMatrix * uModelViewMatrix * aVertexPosition;
      vColor = aVertexColor;
@@ -28,9 +29,10 @@
 </script>
 
     <script id="fragment-shader" type="x-shader/x-vertex">
-    varying lowp vec4 vColor;
+   varying lowp vec4 vColor;
+
    void main() {
-     gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
+     gl_FragColor = vColor;;
    }
 </script>
 </body>
