@@ -4,8 +4,11 @@ const main=()=>{
 
     const shaderProgram = initializeShaderProgram(gl)
     const parameters = getProgramParameters(gl, shaderProgram);
+    // console.log("shaderProgram: ", shaderProgram.toString())
+    // console.log("parameters: ", toString(parameters.attribLocations))
     const buffers = initializeBuffers(gl)
 
+    const texture = loadTexture(gl, 'rubics.png');
     // drawScene(gl,parameters,buffers)
 
     let then = 0;
@@ -14,7 +17,7 @@ const main=()=>{
         const deltaTime = now - then;
         then = now;
 
-        drawScene(gl, parameters, buffers, deltaTime);
+        drawScene(gl, parameters, buffers, deltaTime, texture);
 
         requestAnimationFrame(render);
     }
